@@ -9,29 +9,27 @@ import Animated, {
 } from 'react-native-reanimated';
 import { TabBar } from 'react-native-tab-view';
 import { useContext } from 'react';
-import { AnimationContext } from './App';
+import { AnimationContext } from './Tabs';
 import { useMemoOne } from 'use-memo-one';
+import { useValues } from 'react-native-redash';
 
 const CustomTabBar = props => {
   const values = useContext(AnimationContext);
   const TAB_BAR_OFFSET = 100;
 
-  const { diffY } = useMemoOne(
-    () => ({
-      diffY: diffClamp(values.scrollY, 0, TAB_BAR_OFFSET),
-    }),
-    []
-  );
+  const [copiedScrollY] = useValues([0], []);
 
-  useCode(() => [debug('==>', values.scrollY), debug('==>', diffY)], [
-    values.navigationState.index,
-  ]);
+  const diffY = diffClamp(copiedScrollY, 0, 100);
 
   const height = interpolate(diffY, {
     inputRange: [0, TAB_BAR_OFFSET],
     outputRange: [TAB_BAR_OFFSET, 0],
     extrapolate: Extrapolate.CLAMP,
   });
+
+  useCode(() => [diffY, Animated.set(copiedScrollY, values.scrollY)], [
+    values.scrollY,
+  ]);
 
   return (
     <>

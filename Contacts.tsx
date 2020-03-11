@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
-import { AnimationContext } from './App';
+import { AnimationContext } from './Tabs';
 import Animated from 'react-native-reanimated';
 import { useValues, onScroll } from 'react-native-redash';
 import { useRef } from 'react';
@@ -16,6 +16,7 @@ const Contacts = props => {
       <Animated.ScrollView
         ref={scrollView}
         onScroll={onScroll({ y: values.scrollY })}
+        onScrollBeginDrag={onScroll({ y: values.scrollBY })}
         scrollEventThrottle={1}
         bounces={false}
       >
