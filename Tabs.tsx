@@ -53,11 +53,23 @@ export default class Tabs extends React.Component {
             />
             <Animated.View
               style={{
-                height: interpolate(diffClamp([value.scrollY], 0, 100), {
-                  inputRange: [0, 100],
-                  outputRange: [100, 0],
-                  extrapolate: Extrapolate.CLAMP,
-                }),
+                position: 'absolute',
+                bottom: 0,
+
+                height: 80,
+                width: '100%',
+                transform: [
+                  {
+                    translateY: interpolate(
+                      diffClamp([value.scrollY], 0, 100),
+                      {
+                        inputRange: [0, 100],
+                        outputRange: [0, 100],
+                        extrapolate: Extrapolate.CLAMP,
+                      }
+                    ),
+                  },
+                ],
                 backgroundColor: 'pink',
               }}
             />

@@ -27,9 +27,14 @@ const CustomTabBar = props => {
     extrapolate: Extrapolate.CLAMP,
   });
 
-  useCode(() => [diffY, Animated.set(copiedScrollY, values.scrollY)], [
-    values.scrollY,
-  ]);
+  useCode(
+    () => [
+      diffY,
+      Animated.set(copiedScrollY, values.scrollY),
+      debug('diffY =>', diffY),
+    ],
+    [values.scrollY]
+  );
 
   return (
     <>
